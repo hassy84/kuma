@@ -127,43 +127,35 @@ public class ProceduralSphere : MonoBehaviour {
 		float _pi = Mathf.PI;
 		float _2pi = _pi * 2f;
 
-		vertices[0] = Vector3.up * radius;
 		for( int lat = 0; lat < nbLat; lat++ ) {
 			float a1 = _pi * (float)(lat+1) / (nbLat+1);
 			float sin1 = Mathf.Sin(a1);
 			float cos1 = Mathf.Cos(a1);
 
 			for( int lon = 0; lon <= nbLong; lon++ ) {
-				float a2 = _2pi * (float)(lon == nbLong ? 0 : lon) / nbLong;
+				int loopedLon = (lon == nbLong ? 0 : lon);
+				float a2 = _2pi * (float)loopedLon / nbLong;
 				float sin2 = Mathf.Sin(a2);
 				float cos2 = Mathf.Cos(a2);
 
-				vertices[(lat * nbLong) + lon + lat] =
+				vertices[lon + lat * (nbLong + 1) + 1] =
 				    new Vector3( sin1 * cos2, cos1, sin1 * sin2 )
-				* (Mathf.Max(heights[lat * nbLong + lon], 0) * rate + radius);
-				if (heights[lat * nbLong + lon] < 0) {
-					colors[(lat * nbLong) + lon] = Color.clear;
+				* (Mathf.Max(heights[(lat * nbLong) + loopedLon + lat], 0) * rate + radius);
+				if (heights[(lat * nbLong) + loopedLon + lat] < 0) {
+					colors[lon + lat * (nbLong + 1) + 1] = Color.clear;
 				} else {
-					colors[(lat * nbLong) + lon] = Color.white;
+					colors[lon + lat * (nbLong + 1) + 1] = Color.white;
 				}
 			}
 		}
+		vertices[0] = Vector3.up * radius;
 		vertices[vertices.Length-1] = Vector3.up * -radius;
-		#endregion
-
-
-		#region Normales
-		int normalRate = 1;
-		if (rate < 0) {
-			normalRate = -1;
-		}
-		Vector3[] normales = new Vector3[vertices.Length];
-		for( int n = 0; n < vertices.Length; n++ ) {
-			normales[n] = vertices[n].normalized * normalRate;
-		}
 		#endregion
 
 		mesh.vertices = vertices;
 		mesh.colors = colors;
+
+		mesh.RecalculateBounds();
+		mesh.Optimize();
 	}
 }

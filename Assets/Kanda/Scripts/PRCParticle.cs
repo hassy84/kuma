@@ -70,14 +70,14 @@ public class PRCParticle : MonoBehaviour {
 				float cos2 = Mathf.Cos(a2);
 
 				if (prcData[lat * nbLong + lon] > time) {
-					positions.Add(vertices[(lat * nbLong) + lon + lat]);
+					positions.Add(vertices[lat * nbLong + lon]);
 				}
 			}
 		}
 		#endregion
 
 		for (int i=0; i<positions.Count; ++i) {
-			particleSystem.Emit(positions[i] * radius, Vector3.zero, particleSystem.startSize,5f ,Color.white);
+			particleSystem.Emit(positions[i] * radius, Vector3.zero, particleSystem.startSize, 5f, particleSystem.startColor);
 		}
 	}
 }
