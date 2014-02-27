@@ -5,6 +5,9 @@ using Jaxa;
 
 public class JAXAOpenAPICSVWrapper : BasicCSVReader {
 
+	public enum CompleteMode {CUBIC, LINER};
+	public CompleteMode completeMode = CompleteMode.CUBIC;
+	public int fileDataScale = 1;
 	private int dataScale = 1;
 	private int nbLon;
 	private int nbLat;
@@ -13,7 +16,46 @@ public class JAXAOpenAPICSVWrapper : BasicCSVReader {
 	public float GetDataAt (
 	    DateTime date
 	    , DataType dataType
-	    ,  float apiLon, float apiLat) {
+	    , float apiLon, float apiLat) {
+
+		int lon = Mathf.RoundToInt(apiLon / fileDataScale) * fileDataScale;
+		int lat = Mathf.RoundToInt(apiLat / fileDataScale) * fileDataScale;
+
+		if (completeMode == CompleteMode.CUBIC) {
+			return GetCompletedDataAt(date, dataType, lon, lat);
+
+		} else if (completeMode == CompleteMode.LINER) {
+			float point00 = Mathf.Max(GetCompletedDataAt(date, dataType
+			                                   , Mathf.FloorToInt(apiLon / fileDataScale) * fileDataScale
+			                                   , Mathf.RoundToInt(apiLat / fileDataScale) * fileDataScale)
+					, 0f);
+			float point01 = Mathf.Max(GetCompletedDataAt(date, dataType
+			                                   , Mathf.CeilToInt(apiLon / fileDataScale) * fileDataScale
+			                                   , Mathf.RoundToInt(apiLat / fileDataScale) * fileDataScale)
+					, 0f);
+			float point10 = Mathf.Max(GetCompletedDataAt(date, dataType
+			                                   , Mathf.RoundToInt(apiLon / fileDataScale) * fileDataScale
+			                                   , Mathf.FloorToInt(apiLat / fileDataScale) * fileDataScale)
+					, 0f);
+			float point11 = Mathf.Max(GetCompletedDataAt(date, dataType
+			                                   , Mathf.RoundToInt(apiLon / fileDataScale) * fileDataScale
+			                                   , Mathf.CeilToInt(apiLat / fileDataScale) * fileDataScale)
+					, 0f);
+			float lonRate = (apiLon % fileDataScale) / fileDataScale;
+			float latRate = (apiLat % fileDataScale) / fileDataScale;
+			return ((point00 * (1 - lonRate)
+			         + point01 * lonRate)
+			        + (point10 * (1 - latRate)
+			           + point11 * latRate)) / 2;
+		}
+
+		return -1f;
+	}
+
+	public float GetCompletedDataAt (
+	    DateTime date
+	    , DataType dataType
+	    ,  float lon, float lat) {
 
 		int csvIndex;
 		// Day
@@ -31,13 +73,16 @@ public class JAXAOpenAPICSVWrapper : BasicCSVReader {
 		}
 
 		// Latitude
-		csvIndex += Mathf.FloorToInt((apiLat + 90) / dataScale) * nbLon;
+		csvIndex += Mathf.FloorToInt((lat + 90) / fileDataScale) * nbLon;
 
 		// Longitude
-		csvIndex += Mathf.FloorToInt((apiLon + 180) / dataScale);
+		csvIndex += Mathf.FloorToInt((lon + 180) / fileDataScale);
 
-		var rawData = Contents[csvIndex];
+		csvIndex *= (Size - 1);
+		csvIndex += (int)dataType;
+
 		float result;
+		string rawData = Contents[csvIndex];
 		if (!rawData.StartsWith("ER_")
 		        && float.TryParse(rawData, out result)) {
 			return result;
@@ -48,8 +93,8 @@ public class JAXAOpenAPICSVWrapper : BasicCSVReader {
 	protected override void Awake () {
 		base.Awake();
 		dataScale = JAXAOpenAPI.Instance.dataScale;
-		nbLon = 370 / dataScale;
-		nbLat = 190 / dataScale;
+		nbLon = 370 / fileDataScale;
+		nbLat = 190 / fileDataScale;
 		nbDay = nbLon * nbLat;
 	}
 
