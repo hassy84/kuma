@@ -8,6 +8,7 @@ public class JAXAOpenAPICollector : MonoBehaviour {
 	private JAXAOpenAPI api;
 	public DataType[] requestTypes;
 	public DateTime[] availableDates;
+	public int dateIndex = 0;
 
 	IEnumerator Start () {
 		availableDates = new DateTime[] {
@@ -21,7 +22,7 @@ public class JAXAOpenAPICollector : MonoBehaviour {
 		}
 		api = JAXAOpenAPI.Instance;
 		foreach (var type in requestTypes) {
-			api.CollectData(type, availableDates[3]);
+			api.CollectData(type, availableDates[dateIndex]);
 		}
 	}
 }
