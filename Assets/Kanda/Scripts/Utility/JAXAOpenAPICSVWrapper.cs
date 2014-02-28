@@ -5,7 +5,7 @@ using Jaxa;
 
 public class JAXAOpenAPICSVWrapper : BasicCSVReader {
 
-	public enum CompleteMode {CUBIC, LINER};
+	public enum CompleteMode {ZEROFILL, CUBIC, LINER};
 	public CompleteMode completeMode = CompleteMode.CUBIC;
 	public int fileDataScale = 1;
 	private int dataScale = 1;
@@ -21,7 +21,13 @@ public class JAXAOpenAPICSVWrapper : BasicCSVReader {
 		int lon = Mathf.RoundToInt(apiLon / fileDataScale) * fileDataScale;
 		int lat = Mathf.RoundToInt(apiLat / fileDataScale) * fileDataScale;
 
-		if (completeMode == CompleteMode.CUBIC) {
+		if (completeMode == CompleteMode.ZEROFILL) {
+			if (lon == apiLon && lat == apiLat) {
+				return GetCompletedDataAt(date, dataType, lon, lat);
+			} else {
+				return -1f;
+			}
+		} else if (completeMode == CompleteMode.CUBIC) {
 			return GetCompletedDataAt(date, dataType, lon, lat);
 
 		} else if (completeMode == CompleteMode.LINER) {
