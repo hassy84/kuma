@@ -225,7 +225,8 @@ MonoBehaviour:
   api: {fileID: 698430172}
   sphere: {fileID: 167011500}
   sphereDataType: 1
-  sphereScale: -.00400000019
+  sphereScale: -.00100000005
+  cullThrethold: 3
 --- !u!114 &167011500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -586,7 +587,8 @@ MonoBehaviour:
   api: {fileID: 698430172}
   sphere: {fileID: 590320959}
   sphereDataType: 0
-  sphereScale: .00400000019
+  sphereScale: .00100000005
+  cullThrethold: 3
 --- !u!114 &590320959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -653,6 +655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requestTypes: 000000000100000002000000
+  dateIndex: 0
 --- !u!114 &698430172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -667,6 +670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abortCollection: 0
   dataSource: 1
+  smoothMode: 0
   dataScale: 1
   totalLongitudes: 360
   totalLatitudes: 180
@@ -694,7 +698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CSVFile: {fileID: 4900000, guid: 899e164e47879434b8bc0ddd52763d67, type: 3}
-  completeMode: 1
+  completeMode: 2
   fileDataScale: 10
 --- !u!1001 &718916067
 Prefab:
@@ -742,6 +746,10 @@ Prefab:
     - target: {fileID: 9500000, guid: 3a380b921d8d342f0868aeee28922a18, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 3a380b921d8d342f0868aeee28922a18, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3a380b921d8d342f0868aeee28922a18, type: 3}
@@ -2140,7 +2148,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 8af50c02ae11f48d8bea7aaae66e881c, type: 2}
       propertyPath: sphereScale
-      value: -.00400000019
+      value: -.00100000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 8af50c02ae11f48d8bea7aaae66e881c, type: 2}
+      propertyPath: cullThrethold
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8af50c02ae11f48d8bea7aaae66e881c, type: 2}

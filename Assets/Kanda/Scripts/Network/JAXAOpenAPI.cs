@@ -27,8 +27,10 @@ public class JAXAOpenAPI : SingletonMonoBehaviour<JAXAOpenAPI> {
 	private int pendingHttpRequests = 0;
 
 	public bool abortCollection = false;
-	public enum DataSource {SERVER, CSV, DUMMY};
+	public enum DataSource {SERVER, CSV, DUMMY_RANDOM, DUMMY_LAT, DUMMY_LON};
 	public DataSource dataSource = DataSource.SERVER;
+	public enum SmoothMode {NONE, LOG, MARBLE};
+	public SmoothMode smoothMode = SmoothMode.NONE;
 
 	public int dataScale = 1;
 	[HideInInspector]
@@ -180,6 +182,30 @@ public class JAXAOpenAPI : SingletonMonoBehaviour<JAXAOpenAPI> {
 			requestDate = requestDate.AddDays(1);
 			yield return null;
 		}
+
+		switch (smoothMode) {
+		case SmoothMode.NONE:
+			break;
+		case SmoothMode.LOG:
+			results = Matrix.ConvolutionFilter(
+			              results,
+			              Matrix.LaplacianOfGaussian,
+			              totalLatitudes,
+			              totalLongitudes,
+			              0.4f,
+			              0);
+			break;
+		case SmoothMode.MARBLE:
+			results = Matrix.ConvolutionFilter(
+			              results,
+			              Matrix.GuruguruMarble,
+			              totalLatitudes,
+			              totalLongitudes,
+			              0.4f,
+			              0);
+			break;
+		}
+
 		if (onDataComplete != null) {
 			onDataComplete(type, results);
 		}
@@ -218,8 +244,16 @@ public class JAXAOpenAPI : SingletonMonoBehaviour<JAXAOpenAPI> {
 				onSuccess(result, longitude, latitude);
 			}
 			break;
-		case DataSource.DUMMY:
+		case DataSource.DUMMY_RANDOM:
 			result = UnityEngine.Random.Range(-50f, 50f);
+			onSuccess(result, longitude, latitude);
+			break;
+		case DataSource.DUMMY_LAT:
+			result = latitude % 10;
+			onSuccess(result, longitude, latitude);
+			break;
+		case DataSource.DUMMY_LON:
+			result = longitude % 10;
 			onSuccess(result, longitude, latitude);
 			break;
 		}
