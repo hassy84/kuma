@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Sphere-SND
+  m_Shader: {fileID: 4800000, guid: 8e9f9e8d86ce34fb39f5cd2599b6e9db, type: 3}
+  m_ShaderKeywords: []
+  m_CustomRenderQueue: -1
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: bccdfc40c3f7d41a383141a3acb470ac, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DecalTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Cube
+        second:
+          m_Texture: {fileID: 8900000, guid: 05f65a420e96e9247ad0d1398c40447d, type: 2}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _Reflection
+        second: .589285672
+      data:
+        first:
+          name: _InvFade
+        second: 1
+      data:
+        first:
+          name: _Shininess
+        second: .687765658
+      data:
+        first:
+          name: _Gloss
+        second: 1
+      data:
+        first:
+          name: _FrezPow
+        second: 1
+      data:
+        first:
+          name: _FrezFalloff
+        second: .964285731
+      data:
+        first:
+          name: _EdgeAlpha
+        second: 0
+      data:
+        first:
+          name: _Metalics
+        second: .196428582
+      data:
+        first:
+          name: _Density
+        second: .107142858
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: .99997437, b: .999991298, a: 1}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Emission
+        second: {r: .68817687, g: .688156307, b: .688167989, a: 0}
+      data:
+        first:
+          name: _TintColor
+        second: {r: .5, g: .5, b: .5, a: .5}
