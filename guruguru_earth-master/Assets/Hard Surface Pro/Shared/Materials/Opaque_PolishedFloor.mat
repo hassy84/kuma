@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Opaque_PolishedFloor
+  m_Shader: {fileID: 4800000, guid: 4d6cfc3615bbffd44b89c3f5bcb232d8, type: 3}
+  m_ShaderKeywords: []
+  m_CustomRenderQueue: -1
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 3ff2ef3694b817440becef0e8d262e8f, type: 3}
+          m_Scale: {x: 2, y: 2}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 240c48c4edde7dc4190a647bbf5e69ff, type: 3}
+          m_Scale: {x: 2, y: 2}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Cube
+        second:
+          m_Texture: {fileID: 8900000, guid: 05f65a420e96e9247ad0d1398c40447d, type: 2}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Illum
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Spec_Gloss_Reflec_Masks
+        second:
+          m_Texture: {fileID: 2800000, guid: 7f78c03a83e7a7e4eb932896306148f3, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _Reflection
+        second: 0
+      data:
+        first:
+          name: _Shininess
+        second: 3
+      data:
+        first:
+          name: _Gloss
+        second: 0
+      data:
+        first:
+          name: _FrezPow
+        second: .50746268
+      data:
+        first:
+          name: _FrezFalloff
+        second: 2.05970144
+      data:
+        first:
+          name: _EdgeAlpha
+        second: 0
+      data:
+        first:
+          name: _Metalics
+        second: .604477584
+      data:
+        first:
+          name: _Density
+        second: .00100000005
+      data:
+        first:
+          name: _EmissionLM
+        second: 0
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: .360784322, g: .360784322, b: .360784322, a: 1}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: .5, g: .550000012, b: .600000024, a: 1}
+--- !u!1002 &2100001
+EditorExtensionImpl:
+  serializedVersion: 6
