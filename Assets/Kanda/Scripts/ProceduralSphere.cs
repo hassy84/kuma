@@ -116,7 +116,7 @@ public class ProceduralSphere : MonoBehaviour {
 		mesh.Optimize();
 	}
 
-	public void ChangeHeight (float[] heights, float rate = 0.02f) {
+	public void ChangeHeight (float[] heights, float rate = 0.02f, float cutOut = 0f) {
 
 		Mesh mesh = filter.mesh;
 
@@ -140,8 +140,9 @@ public class ProceduralSphere : MonoBehaviour {
 
 				vertices[lon + lat * (nbLong + 1) + 1] =
 				    new Vector3( sin1 * cos2, cos1, sin1 * sin2 )
-				* (Mathf.Max(heights[(lat * nbLong) + loopedLon + lat], 0) * rate + radius);
-				if (heights[(lat * nbLong) + loopedLon + lat] < 0) {
+					* (radius + rate
+							* Mathf.Max(heights[(lat * nbLong) + loopedLon + lat], 0));
+				if (heights[(lat * nbLong) + loopedLon + lat] <= cutOut) {
 					colors[lon + lat * (nbLong + 1) + 1] = Color.clear;
 				} else {
 					colors[lon + lat * (nbLong + 1) + 1] = Color.white;
